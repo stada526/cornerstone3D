@@ -418,11 +418,30 @@ async function run() {
   // Set the volume to load
   // volume.load();
 
+  const dimensions = volume.dimensions;
+  const slabThickness = Math.sqrt(
+    dimensions[0] * dimensions[0] +
+      dimensions[1] * dimensions[1] +
+      dimensions[2] * dimensions[2]
+  );
+
   // Set volumes on the viewports
   await setVolumesForViewports(
     renderingEngine,
     [{ volumeId, callback: setCtTransferFunctionForVolumeActor }],
-    [viewportId1, viewportId2, viewportId3]
+    [viewportId1, viewportId3]
+  );
+
+  await setVolumesForViewports(
+    renderingEngine,
+    [
+      {
+        volumeId,
+        blendMode: Enums.BlendModes.MAXIMUM_INTENSITY_BLEND,
+        slabThickness,
+      },
+    ],
+    [viewportId2]
   );
 
   // Add the segmentation representation to the viewports
@@ -439,6 +458,27 @@ async function run() {
 
   // Render the image
   renderingEngine.render();
+
+  const button = document.createElement('button');
+  button.innerText = 'Debug';
+  button.addEventListener('click', () => {
+    const viewport2 = renderingEngine.getViewport(viewportId2);
+
+    const map = viewport2._actors;
+    for (const actorEntry of viewport2.getActors()) {
+      const { actor } = actorEntry;
+      const mapper = actor.getMapper();
+
+      console.log('--------');
+      console.log('RefId: ', actorEntry.referencedId);
+      console.log('BlendMode: ', mapper.getBlendModeAsString());
+      console.log('SlabThickness: ', actorEntry.slabThickness);
+
+      actorEntry.slabThickness = slabThickness;
+    }
+    renderingEngine.render();
+  });
+  content.appendChild(button);
 }
 
 run();
