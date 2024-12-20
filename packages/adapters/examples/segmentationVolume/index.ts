@@ -10,6 +10,7 @@ import {
     addManipulationBindings,
     addToggleButtonToToolbar,
     addUploadToToolbar,
+    addDropdownToToolbar,
     createImageIdsAndCacheMetaData,
     initDemo,
     labelmapTools,
@@ -116,7 +117,8 @@ const state = {
     toolGroupId: "MY_TOOL_GROUP_ID",
     viewportIds: ["CT_AXIAL", "CT_SAGITTAL", "CT_CORONAL"],
     volumeId: "",
-    segmentationId: "LOAD_SEG_ID:" + cornerstone.utilities.uuidv4(),
+    segmentationIds: [],
+    segmentationId: "", // Active segmentation ID
     referenceImageIds: [],
     skipOverlapping: false,
     segImageIds: [],
@@ -207,20 +209,42 @@ addButtonToToolbar({
     container: group1
 });
 
-addUploadToToolbar({
-    id: "IMPORT_DICOM",
-    title: "Import DICOM",
-    onChange: async (files: FileList) => {
-        await readDicom(files, state);
-        await loadDicom();
+const DROPDOWN_ELEMENT_ID = "SEGMENTATION_IDS";
+addDropdownToToolbar({
+    id: DROPDOWN_ELEMENT_ID,
+    options: {
+        values: state.segmentationIds
     },
-    container: group2
+    onSelectedValueChange: value => {
+        state.viewportIds.forEach(viewportId => {
+            cornerstoneTools.segmentation.activeSegmentation.setActiveSegmentation(
+                viewportId,
+                value
+            );
+        });
+    },
+    container: demoToolbar
 });
+
+function addNewOptionToDropdown(id: string, value: string) {
+    const dropdown = document.getElementById(id) as HTMLSelectElement;
+    const newOption = document.createElement("option");
+    newOption.value = value;
+    newOption.text = value;
+    dropdown.appendChild(newOption);
+    dropdown.value = value;
+}
 
 addButtonToToolbar({
     id: "CREATE_SEGMENTATION",
     title: "Create Empty SEG",
     onClick: async () => {
+        const segmentationId = "LOAD_SEG_ID:" + cornerstone.utilities.uuidv4();
+        state.segmentationId = segmentationId;
+        state.segmentationIds.push(segmentationId);
+
+        addNewOptionToDropdown(DROPDOWN_ELEMENT_ID, segmentationId);
+
         await createSegmentation(state);
         createSegmentationRepresentation();
     },
@@ -271,21 +295,26 @@ async function run() {
     state.toolGroup = cornerstoneTools.ToolGroupManager.createToolGroup(
         state.toolGroupId
     );
-    addManipulationBindings(state.toolGroup, {
-        toolMap: labelmapTools.toolMap
-    });
+    // addManipulationBindings(state.toolGroup, {
+    //     toolMap: labelmapTools.toolMap
+    // });
 
     cornerstoneTools.addTool(BrushTool);
+    state.toolGroup.addTool(BrushTool.toolName);
 
-    state.toolGroup.addToolInstance("CircularBrush", BrushTool.toolName, {
-        activeStrategy: "FILL_INSIDE_CIRCLE"
+    state.toolGroup.addToolInstance("ThresholdCircle", BrushTool.toolName, {
+        activeStrategy: "THRESHOLD_INSIDE_CIRCLE"
     });
 
-    state.toolGroup.setToolActive("CircularBrush", {
+    state.toolGroup.setToolActive("ThresholdCircle", {
         bindings: [
             { mouseButton: cornerstoneTools.Enums.MouseBindings.Primary }
         ]
     });
+    cornerstoneTools.utilities.segmentation.setBrushThresholdForToolGroup(
+        state.toolGroupId,
+        [-Infinity, Infinity]
+    );
 
     state.renderingEngine = new cornerstone.RenderingEngine(
         state.renderingEngineId
