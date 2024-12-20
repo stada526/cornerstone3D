@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0](https://github.com/cornerstonejs/cornerstone3D/compare/v2.13.0...v2.14.0) (2024-12-20)
+
+### Features
+
+- **probe:** isPointNearTool for probe tool, and use line width from config ([#1721](https://github.com/cornerstonejs/cornerstone3D/issues/1721)) ([90c1a98](https://github.com/cornerstonejs/cornerstone3D/commit/90c1a98965584df7154cb39b43f60ae187f5e399))
+
+# [2.13.0](https://github.com/cornerstonejs/cornerstone3D/compare/v2.12.3...v2.13.0) (2024-12-20)
+
+### Features
+
+- **voi:** add linear exact voi lut function ([#1717](https://github.com/cornerstonejs/cornerstone3D/issues/1717)) ([faf3b9d](https://github.com/cornerstonejs/cornerstone3D/commit/faf3b9ded5dc42ef9fdd6d2f36aecb1e56cefeb7))
+
 ## [2.12.3](https://github.com/cornerstonejs/cornerstone3D/compare/v2.12.2...v2.12.3) (2024-12-18)
 
 ### Bug Fixes
