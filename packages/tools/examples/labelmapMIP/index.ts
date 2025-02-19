@@ -100,7 +100,7 @@ async function run() {
   toolGroup.addTool(StackScrollTool.toolName);
 
   [toolGroup, toolGroup2].forEach((toolGroup) => {
-    toolGroup?.addTool(SegmentSelectTool.toolName);
+    // toolGroup?.addTool(SegmentSelectTool.toolName);
     toolGroup?.addToolInstance('SphereBrush', BrushTool.toolName, {
       activeStrategy: 'FILL_INSIDE_SPHERE',
     });
@@ -175,13 +175,13 @@ async function run() {
     bindings: [{ mouseButton: MouseBindings.Primary }],
   });
 
-  toolGroup.setToolActive(SegmentSelectTool.toolName);
+  // toolGroup.setToolActive(SegmentSelectTool.toolName);
 
   toolGroup2.setToolActive(VolumeRotateTool.toolName, {
     bindings: [{ mouseButton: MouseBindings.Wheel }],
   });
 
-  toolGroup2.setToolActive(SegmentSelectTool.toolName);
+  // toolGroup2.setToolActive(SegmentSelectTool.toolName);
 
   // Set the volume to load
   volume.load();
