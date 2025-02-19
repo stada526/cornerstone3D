@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.11](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.10...v2.19.11) (2025-02-18)
+
+### Bug Fixes
+
+- changing opacity based on segment index ([#1833](https://github.com/cornerstonejs/cornerstone3D/issues/1833)) ([6bf44cf](https://github.com/cornerstonejs/cornerstone3D/commit/6bf44cf0e151f239dbc41ca4277f0360e2c873f7))
+
+## [2.19.10](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.9...v2.19.10) (2025-02-18)
+
+### Bug Fixes
+
+- Prevent overwriting existing inactive styles ([#1831](https://github.com/cornerstonejs/cornerstone3D/issues/1831)) ([8e8c29e](https://github.com/cornerstonejs/cornerstone3D/commit/8e8c29e6d6276936b1be5e4fb116a4ec2585dfd8))
+
+## [2.19.9](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.8...v2.19.9) (2025-02-18)
+
+### Bug Fixes
+
+- incorrect check for validating pixel data array type ([#1830](https://github.com/cornerstonejs/cornerstone3D/issues/1830)) ([f9d5b79](https://github.com/cornerstonejs/cornerstone3D/commit/f9d5b79c75a4125bbf4e646752ad2071ddc76c41))
+
+## [2.19.8](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.7...v2.19.8) (2025-02-18)
+
+### Bug Fixes
+
+- **rendering:** fix image overflow issues by restoring data type check ([#1829](https://github.com/cornerstonejs/cornerstone3D/issues/1829)) ([f5ff886](https://github.com/cornerstonejs/cornerstone3D/commit/f5ff886cbc7fce190f943880c180533f3af97065))
+
+## [2.19.7](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.6...v2.19.7) (2025-02-06)
+
+### Bug Fixes
+
+- **labelmap:** Resolve color inconsistency and statistic grab issues ([#1809](https://github.com/cornerstonejs/cornerstone3D/issues/1809)) ([f43a176](https://github.com/cornerstonejs/cornerstone3D/commit/f43a1766ba16aec1fc6bd638543f406735281220))
+
+## [2.19.6](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.5...v2.19.6) (2025-02-05)
+
+### Bug Fixes
+
+- **viewport:** Prevent flickering during viewport flip operations ([#1813](https://github.com/cornerstonejs/cornerstone3D/issues/1813)) ([4170a06](https://github.com/cornerstonejs/cornerstone3D/commit/4170a063cfc2a6e39139b9cc905acd68698a3652))
+
+## [2.19.5](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.4...v2.19.5) (2025-02-04)
+
+### Bug Fixes
+
+- **labelmap:** only show labelmap as independent component on mip if same size ([#1810](https://github.com/cornerstonejs/cornerstone3D/issues/1810)) ([d2e291e](https://github.com/cornerstonejs/cornerstone3D/commit/d2e291efb880c076ef5d67ffc06f8d58ff3c0fd8))
+
+## [2.19.4](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.3...v2.19.4) (2025-02-04)
+
+### Bug Fixes
+
+- **examples:** fix labelmap interpolation example ([#1808](https://github.com/cornerstonejs/cornerstone3D/issues/1808)) ([e64d428](https://github.com/cornerstonejs/cornerstone3D/commit/e64d428a5a55144d8d9d1f97388808cb799b7314))
+
 ## [2.19.3](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.2...v2.19.3) (2025-02-04)
 
 ### Bug Fixes

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.11](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.10...v2.19.11) (2025-02-18)
+
+**Note:** Version bump only for package @cornerstonejs/dicom-image-loader
+
+## [2.19.10](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.9...v2.19.10) (2025-02-18)
+
+**Note:** Version bump only for package @cornerstonejs/dicom-image-loader
+
+## [2.19.9](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.8...v2.19.9) (2025-02-18)
+
+### Bug Fixes
+
+- incorrect check for validating pixel data array type ([#1830](https://github.com/cornerstonejs/cornerstone3D/issues/1830)) ([f9d5b79](https://github.com/cornerstonejs/cornerstone3D/commit/f9d5b79c75a4125bbf4e646752ad2071ddc76c41))
+
+## [2.19.8](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.7...v2.19.8) (2025-02-18)
+
+**Note:** Version bump only for package @cornerstonejs/dicom-image-loader
+
+## [2.19.7](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.6...v2.19.7) (2025-02-06)
+
+**Note:** Version bump only for package @cornerstonejs/dicom-image-loader
+
+## [2.19.6](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.5...v2.19.6) (2025-02-05)
+
+**Note:** Version bump only for package @cornerstonejs/dicom-image-loader
+
+## [2.19.5](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.4...v2.19.5) (2025-02-04)
+
+**Note:** Version bump only for package @cornerstonejs/dicom-image-loader
+
+## [2.19.4](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.3...v2.19.4) (2025-02-04)
+
+**Note:** Version bump only for package @cornerstonejs/dicom-image-loader
+
 ## [2.19.3](https://github.com/cornerstonejs/cornerstone3D/compare/v2.19.2...v2.19.3) (2025-02-04)
 
 ### Bug Fixes
