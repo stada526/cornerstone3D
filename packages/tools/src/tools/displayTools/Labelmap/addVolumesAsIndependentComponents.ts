@@ -141,6 +141,8 @@ export async function addVolumesAsIndependentComponents({
     preLoad: load,
   });
 
+  let timeoutId;
+  const pendingSlices = new Set<number>();
   // Todo: this is really ugly this shouldn't be here at all
   function onSegmentationDataModified(evt) {
     // update the second component of the array with the new segmentation data
@@ -161,22 +163,29 @@ export async function addVolumesAsIndependentComponents({
     const newComp = 2;
     const dims = segImageData.getDimensions();
 
-    const slices = modifiedSlicesToUse?.length
+    const slices: number[] = modifiedSlicesToUse?.length
       ? modifiedSlicesToUse
       : Array.from({ length: dims[2] }, (_, i) => i);
 
-    for (const z of slices) {
-      for (let y = 0; y < dims[1]; ++y) {
-        for (let x = 0; x < dims[0]; ++x) {
-          const iTuple = x + dims[0] * (y + dims[1] * z);
-          baseData[iTuple * newComp + 1] = segVoxelManager.getAtIndex(
-            iTuple
-          ) as number;
+    slices.forEach((x) => pendingSlices.add(x));
+
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      for (const z of pendingSlices) {
+        for (let y = 0; y < dims[1]; ++y) {
+          for (let x = 0; x < dims[0]; ++x) {
+            const iTuple = x + dims[0] * (y + dims[1] * z);
+            baseData[iTuple * newComp + 1] = segVoxelManager.getAtIndex(
+              iTuple
+            ) as number;
+          }
         }
       }
-    }
-
-    array.setData(baseData);
+      array.setData(baseData);
+      pendingSlices.clear();
+    }, 100);
   }
 
   eventTarget.addEventListener(

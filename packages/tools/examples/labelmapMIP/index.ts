@@ -44,6 +44,8 @@ const toolGroupId = 'MY_TOOLGROUP_ID';
 // Create the viewports
 const viewportId1 = 'CT_LEFT';
 const viewportId2 = 'CT_MIP';
+const viewportId3 = 'CT_MIP_CORONAL_1';
+const viewportId4 = 'CT_MIP_CORONAL_2';
 
 // ======== Set up page ======== //
 setTitleAndDescription(
@@ -61,13 +63,21 @@ viewportGrid.style.flexDirection = 'row';
 
 const element1 = document.createElement('div');
 const element2 = document.createElement('div');
+const element3 = document.createElement('div');
+const element4 = document.createElement('div');
 element1.style.width = size;
 element1.style.height = size;
 element2.style.width = size;
 element2.style.height = size;
+element3.style.width = size;
+element3.style.height = size;
+element4.style.width = size;
+element4.style.height = size;
 
 viewportGrid.appendChild(element1);
 viewportGrid.appendChild(element2);
+viewportGrid.appendChild(element3);
+viewportGrid.appendChild(element4);
 
 content.appendChild(viewportGrid);
 
@@ -90,7 +100,7 @@ async function run() {
   toolGroup.addTool(StackScrollTool.toolName);
 
   [toolGroup, toolGroup2].forEach((toolGroup) => {
-    toolGroup?.addTool(SegmentSelectTool.toolName);
+    // toolGroup?.addTool(SegmentSelectTool.toolName);
     toolGroup?.addToolInstance('SphereBrush', BrushTool.toolName, {
       activeStrategy: 'FILL_INSIDE_SPHERE',
     });
@@ -133,6 +143,24 @@ async function run() {
         background: <Types.Point3>[0.2, 0, 0.2],
       },
     },
+    {
+      viewportId: viewportId3,
+      type: ViewportType.ORTHOGRAPHIC,
+      element: element3,
+      defaultOptions: {
+        orientation: Enums.OrientationAxis.CORONAL,
+        background: <Types.Point3>[0.2, 0, 0.2],
+      },
+    },
+    {
+      viewportId: viewportId4,
+      type: ViewportType.ORTHOGRAPHIC,
+      element: element4,
+      defaultOptions: {
+        orientation: Enums.OrientationAxis.CORONAL,
+        background: <Types.Point3>[0.2, 0, 0.2],
+      },
+    },
   ];
 
   renderingEngine.setViewports(viewportInputArray);
@@ -147,13 +175,13 @@ async function run() {
     bindings: [{ mouseButton: MouseBindings.Primary }],
   });
 
-  toolGroup.setToolActive(SegmentSelectTool.toolName);
+  // toolGroup.setToolActive(SegmentSelectTool.toolName);
 
   toolGroup2.setToolActive(VolumeRotateTool.toolName, {
     bindings: [{ mouseButton: MouseBindings.Wheel }],
   });
 
-  toolGroup2.setToolActive(SegmentSelectTool.toolName);
+  // toolGroup2.setToolActive(SegmentSelectTool.toolName);
 
   // Set the volume to load
   volume.load();
@@ -170,11 +198,16 @@ async function run() {
         slabThickness: 50000,
       },
     ],
-    [viewportId2]
+    [viewportId2, viewportId3, viewportId4]
   );
 
   // Render the image
-  renderingEngine.renderViewports([viewportId1, viewportId2]);
+  renderingEngine.renderViewports([
+    viewportId1,
+    viewportId2,
+    viewportId3,
+    viewportId4,
+  ]);
 
   // Add some segmentations based on the source data volume
   // ============================= //
@@ -204,15 +237,17 @@ async function run() {
     }
   );
 
-  segmentation.config.style.setStyle(
-    {
-      type: csToolsEnums.SegmentationRepresentations.Labelmap,
-      viewportId: viewportId2,
-    },
-    {
-      activeSegmentOutlineWidthDelta: 3,
-    }
-  );
+  [viewportId2, viewportId3, viewportId4].forEach((viewportId) => {
+    segmentation.config.style.setStyle(
+      {
+        type: csToolsEnums.SegmentationRepresentations.Labelmap,
+        viewportId: viewportId,
+      },
+      {
+        activeSegmentOutlineWidthDelta: 3,
+      }
+    );
+  });
 
   // Add the segmentations to state
   segmentation.addSegmentations([
@@ -232,14 +267,16 @@ async function run() {
   ]);
 
   setTimeout(() => {
-    segmentation.addLabelmapRepresentationToViewport(viewportId2, [
-      {
-        segmentationId,
-        config: {
-          blendMode: BlendModes.LABELMAP_EDGE_PROJECTION_BLEND,
+    [viewportId2, viewportId3, viewportId4].forEach((viewportId) => {
+      segmentation.addLabelmapRepresentationToViewport(viewportId, [
+        {
+          segmentationId,
+          config: {
+            blendMode: BlendModes.LABELMAP_EDGE_PROJECTION_BLEND,
+          },
         },
-      },
-    ]);
+      ]);
+    });
   }, 1000);
 
   triggerSegmentationDataModified(segmentationId);
