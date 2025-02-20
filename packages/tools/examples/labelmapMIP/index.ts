@@ -243,6 +243,20 @@ async function run() {
   }, 1000);
 
   triggerSegmentationDataModified(segmentationId);
+
+  const resizeButton = document.createElement('button');
+  resizeButton.innerText = 'Resize';
+  resizeButton.addEventListener('click', () => {
+    const viewports = renderingEngine.getViewports();
+    const presentations = viewports.map((viewport) =>
+      viewport.getViewPresentation()
+    );
+    renderingEngine.resize(true, false);
+    viewports.forEach((viewport, idx) => {
+      viewport.setViewPresentation(presentations[idx]);
+    });
+  });
+  content.appendChild(resizeButton);
 }
 
 run();
