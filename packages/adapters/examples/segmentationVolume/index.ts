@@ -329,15 +329,23 @@ async function run() {
 
     cornerstoneTools.addTool(BrushTool);
 
-    state.toolGroup.addToolInstance("CircularBrush", BrushTool.toolName, {
-        activeStrategy: "FILL_INSIDE_CIRCLE"
+    state.toolGroup.addToolInstance("ThresholdCircle", BrushTool.toolName, {
+        activeStrategy: "THRESHOLD_INSIDE_CIRCLE"
     });
 
-    state.toolGroup.setToolActive("CircularBrush", {
+    state.toolGroup.setToolActive("ThresholdCircle", {
         bindings: [
             { mouseButton: cornerstoneTools.Enums.MouseBindings.Primary }
         ]
     });
+    cornerstoneTools.utilities.segmentation.setBrushThresholdForToolGroup(
+        state.toolGroupId,
+        {
+            range: [-Infinity, Infinity],
+            isDynamic: false,
+            dynamicRadius: 0
+        }
+    );
 
     state.renderingEngine = new cornerstone.RenderingEngine(
         state.renderingEngineId
